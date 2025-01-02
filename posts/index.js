@@ -42,11 +42,7 @@ app.get("/posts", (req, res) => {
   return res.status(200).send(Object.values(posts));
 });
 
-app.post("/events", async (req, res) => {
-  const { eventType, data } = req.body;
-  return res.status(200).send({ message: "Success" });
-});
-
 app.listen(3005, () => {
-  console.log("Server running on port 3005");
+  console.log("Its time to leave the planet!");
+  console.log("Server running on port 3005!");
 });
