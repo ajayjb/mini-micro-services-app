@@ -61,7 +61,7 @@ app.post("/events", async (req, res) => {
     }
 
     axios
-      .post("http://localhost:4000/events", {
+      .post("http://event-bus-srv:4000/events", {
         eventType: "CommentModerated",
         data: {
           id: data.id,

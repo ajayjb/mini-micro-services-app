@@ -48,7 +48,7 @@ app.get("/posts", (req, res) => {
 app.listen(3015, async () => {
   console.log("Server running on port 3015");
 
-  const events = await axios.get("http://localhost:4000/events");
+  const events = await axios.get("http://event-bus-srv:4000/events");
   events.data.forEach((element) => {
     eventHandler(element.eventType, element.data);
   });

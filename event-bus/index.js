@@ -25,18 +25,38 @@ app.post("/events", async (req, res) => {
 
   events.push(event);
 
-  axios.post("http://localhost:3005/events", event).catch((error) => {
-    console.log(error.message);
-  });
-  axios.post("http://localhost:3010/events", event).catch((error) => {
-    console.log(error.message);
-  });
-  axios.post("http://localhost:3015/events", event).catch((error) => {
-    console.log(error.message);
-  });
-  axios.post("http://localhost:3020/events", event).catch((error) => {
-    console.log(error.message);
-  });
+  axios
+    .post("http://posts-clusterip-srv:3005/events", event)
+    .then((result) => {
+      console.log(result.data);
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+  axios
+    .post("http://comments-clusterip-srv:3010/events", event)
+    .then((result) => {
+      console.log(result.data);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+  axios
+    .post("http://query-service-clusterip-srv:3015/events", event)
+    .then((result) => {
+      console.log(result.data);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+  axios
+    .post("http://moderation-service-srv:3020/events", event)
+    .then((result) => {
+      console.log(result.data);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 
   return res.send({});
 });

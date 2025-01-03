@@ -27,7 +27,7 @@ app.post("/post", async (req, res) => {
   posts[id] = { id, title, createdAt: new Date().getTime() };
 
   axios
-    .post("http://localhost:4000/events", {
+    .post("http://event-bus-srv:4000/events", {
       eventType: "PostCreated",
       data: { id, title, createdAt: new Date().getTime() },
     })
@@ -40,6 +40,12 @@ app.post("/post", async (req, res) => {
 
 app.get("/posts", (req, res) => {
   return res.status(200).send(Object.values(posts));
+});
+
+app.post("/events", (req, res) => {
+  const { eventType, data } = req.body;
+  console.log(eventType, data);
+  return res.status(200).send({ message: "Success" });
 });
 
 app.listen(3005, () => {
