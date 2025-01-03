@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderation-service-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moderation-service
+  template:
+    metadata:
+      labels:
+         app: moderation-service
+    spec:
+      containers:
+        - name: moderation-service
+          image: ajayjb/moderation-service
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation-service-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: moderation-service
+  ports:
+    - name: moderation-service
+      protocol: TCP
+      port: 3020
+      targetPort: 3020

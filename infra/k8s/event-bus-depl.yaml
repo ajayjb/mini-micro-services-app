@@ -1,35 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts-depl
+  name: event-bus-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: posts
+      app: event-bus
   template:
     metadata:
       labels:
-        app: posts
+         app: event-bus
     spec:
       containers:
-        - name: posts
-          image: ajayjb/posts
+        - name: event-bus
+          image: ajayjb/event-bus
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-clusterip-srv
+  name: event-bus-srv
 spec:
   type: ClusterIP
   selector:
-    app: posts
+    app: event-bus
   ports:
-    - name: posts-clusterip
+    - name: event-bus
       protocol: TCP
-      port: 3005
-      targetPort: 3005
-
-     
+      port: 4000
+      targetPort: 4000
