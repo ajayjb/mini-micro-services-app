@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: posts-fe-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts-fe
+  template:
+    metadata:
+      labels:
+        app: posts-fe
+    spec:
+      containers:
+        - name: posts-fe
+          image: ajayjb/posts-fe
+
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: posts-fe-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: posts-fe
+  ports:
+    - name: posts-fe
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

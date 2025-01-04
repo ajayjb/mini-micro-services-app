@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+spec: 
+  ingressClassName: nginx
+  rules: 
+    - host: posts.com  
+      http: 
+        paths:
+          - path: "/posts"
+            pathType: Exact
+            backend:
+              service:
+                name: query-service-clusterip-srv
+                port:
+                  number: 3015
+          - path: "/post"
+            pathType: Exact
+            backend:
+              service:
+                name: "posts-clusterip-srv"
+                port:
+                  number: 3005
+          - path: "post/${postId}/comment"
+            pathType: Prefix
+            backend:
+              service:
+                name: "comments-clusterip-srv"
+                port:
+                  number: 3010
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: posts-fe-srv
+                port:
+                  number: 3000
