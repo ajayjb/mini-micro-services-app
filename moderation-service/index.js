@@ -54,7 +54,7 @@ app.post("/events", async (req, res) => {
     ];
 
     for (const key of keywordsToSearch) {
-      if (content.search(key) !== -1) {
+      if (content.toLowerCase().search(key) !== -1) {
         status = "rejected";
         break;
       }

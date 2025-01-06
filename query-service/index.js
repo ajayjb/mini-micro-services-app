@@ -5,7 +5,7 @@ import axios from "axios";
 const app = express();
 app.use(express.json());
 
-const whitelist = ["http://localhost:3000"];
+const whitelist = ["http://localhost:3000", "http://posts.com"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
