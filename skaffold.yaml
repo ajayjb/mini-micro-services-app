@@ -1,40 +1,57 @@
-apiVersion: skaffold/v4beta11
+apiVersion: skaffold/v4beta3
 kind: Config
-metadata:
-  name: mini-micro-services-app
-build:
-  artifacts:
-    - image: ajayjb/comments
-      context: comments
-      buildpacks:
-        builder: gcr.io/buildpacks/builder:v1
-    - image: ajayjb/event-bus
-      context: event-bus
-      buildpacks:
-        builder: gcr.io/buildpacks/builder:v1
-    - image: ajayjb/moderation-service
-      context: fe
-      buildpacks:
-        builder: gcr.io/buildpacks/builder:v1
-    - image: ajayjb/posts
-      context: moderation-service
-      buildpacks:
-        builder: gcr.io/buildpacks/builder:v1
-    - image: ajayjb/posts-fe
-      context: posts
-      buildpacks:
-        builder: gcr.io/buildpacks/builder:v1
-    - image: ajayjb/query-service
-      context: query-service
-      buildpacks:
-        builder: gcr.io/buildpacks/builder:v1
 manifests:
   rawYaml:
-    - infra/k8s/comments-depl.yaml
-    - infra/k8s/event-bus-depl.yaml
-    - infra/k8s/ingress-srv.yaml
-    - infra/k8s/moderation-service-depl.yaml
-    - infra/k8s/posts-depl.yaml
-    - infra/k8s/posts-fe-depl.yaml
-    - infra/k8s/posts-srv.yaml
-    - infra/k8s/query-service-depl.yaml
+    - /infra/k8/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: ajayjb/posts-fe
+      context: fe
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+    - image: ajayjb/posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: ajayjb/comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: ajayjb/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: ajayjb/moderation-service
+      context: moderation-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: ajayjb/query-service
+      context: query-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
