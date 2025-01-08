@@ -49,6 +49,5 @@ app.post("/events", (req, res) => {
 });
 
 app.listen(3005, () => {
-  console.log("Its time to leave the planet!");
   console.log("Server running on port 3005!");
 });
